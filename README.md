@@ -1,7 +1,7 @@
 # API Blog
 
-[![Estado de la Construcción](https://img.shields.io/badge/estado-construcción-green.svg)](https://tu-enlace-de-construcción.com)
-[![Versión](https://img.shields.io/badge/versión-1.0.0-blue.svg)](https://github.com/tu-usuario/tu-repo)
+[![Estado de la Construcción](https://img.shields.io/badge/estado-construcción-green.svg)](https://apiblog-7f09f1adc880.herokuapp.com/)
+[![Versión](https://img.shields.io/badge/versión-1.0.0-blue.svg)](https://github.com/saulfranco14)
 [![Licencia](https://img.shields.io/badge/licencia-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Este repositorio alberga una API REST diseñada para facilitar la gestión de usuarios y la administración de entradas de blog. Con esta API, los desarrolladores pueden implementar de manera sencilla las siguientes funcionalidades en sus aplicaciones:
@@ -16,13 +16,10 @@ Este repositorio alberga una API REST diseñada para facilitar la gestión de us
 
 ## Requisitos
 
-- Node.js
-- npm o yarn
+- Navegador web (No es necesario instalar localmente)
 
-## Instalación
+## Uso
 
-1. Clona este repositorio en tu máquina local:
-
-   ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git
-   cd tu-repo
+La API ya está desplegada y disponible en línea en [https://apiblog-7f09f1adc880.herokuapp.com/](https://apiblog-7f09f1adc880.herokuapp.com/). 
+No es necesario instalarla localmente. 
+Puedes acceder a la API utilizando un navegador web o realizar solicitudes HTTP desde tu aplicación.
