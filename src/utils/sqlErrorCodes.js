@@ -4,6 +4,7 @@ const SqlErrorCodes = {
   SYNTAX_ERROR: "ER_PARSE_ERROR",
   USER_NOT_FOUND: "USER_NOT_FOUND",
   INCORRECT_PASSWORD: "INCORRECT_PASSWORD",
+  INVALID_TOKEN: "INVALID_TOKEN", 
 };
 
 export default SqlErrorCodes;

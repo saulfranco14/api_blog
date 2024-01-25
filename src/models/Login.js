@@ -4,11 +4,11 @@ import {
   getLoginByUserQuery,
   insertLoginQuery,
   updateLoginQuery,
-  updateUserTokenQuery
+  updateUserTokenQuery,
 } from "../sql/LoginQueries.js";
 import { hashPassword } from "../utils/bcrypt.js";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 class Login {
   constructor(
@@ -73,6 +73,22 @@ class Login {
     }
   }
 
+  static async verifyToken(token) {
+    try {
+      if (!token) {
+        const error = new Error("No se proporcionó token.");
+        error.code = "INCORRECT_TOKEN";
+        throw error;
+      }
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      return decoded;
+    } catch (error) {
+      console.error("Error al verificar el token:", error);
+      throw error;
+    }
+  }
+
   async save() {
     if (!this.user_login || !this.password_login || !this.id_role)
       throw new Error("Datos requeridos no proporcionados.");
@@ -95,13 +111,11 @@ class Login {
   }
 
   static async updateUserToken(id_login, newToken) {
-    if (!id_login || !newToken) throw new Error("ID de login y token son requeridos.");
+    if (!id_login || !newToken)
+      throw new Error("ID de login y token son requeridos.");
 
     try {
-      await db.query(updateUserTokenQuery, [ 
-        newToken, 
-        id_login, 
-      ]);
+      await db.query(updateUserTokenQuery, [newToken, id_login]);
     } catch (error) {
       console.error("Error al actualizar el token del usuario:", error);
       throw error;

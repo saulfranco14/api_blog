@@ -1,5 +1,6 @@
 import Login from "../models/Login.js";
 import { handleSqlError } from "../utils/handleError.js";
+import SqlErrorCodes from "../utils/sqlErrorCodes.js";
 
 /**
  * Retrieves a login record by its ID.
@@ -58,6 +59,31 @@ export const authenticateUser = async (req, res) => {
     res.json({ message: "Auth success", token });
   } catch (error) {
     console.log("error", error)
+    handleSqlError(error, res); 
+  }
+};
+
+
+/**
+ * Verifies a JWT token and returns user data.
+ *
+ * @param {object} req - Express request object with the JWT token.
+ * @param {object} res - Express response object.
+ */
+export const verifyUserToken = async (req, res) => {
+  //const token = req.headers.authorization?.split(' ')[1]; /"Bearer <token>"
+  const { token } = req.body;
+
+  if (!token) return res.status(401).json({ error: "Token no proporcionado" });
+  
+  try {
+    const userData = await Login.verifyToken(token);
+    res.json({ message: "Token success", data: userData });
+  } catch (error) {
+    console.error("Error while verifying token:", error);
+    if (error.name === "JsonWebTokenError") {
+      error.code = SqlErrorCodes.INVALID_TOKEN;
+    }
     handleSqlError(error, res); 
   }
 };

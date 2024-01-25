@@ -1,46 +1,28 @@
-import express from 'express';
+import express from "express";
 import {
-  getLoginById,
-  getLoginByUser,
   createLogin,
-  updateLogin,
-  authenticateUser
-} from '../../controllers/Login.js';
+  authenticateUser,
+  verifyUserToken,
+} from "../../controllers/Login.js";
 
 const LoginRoute = express.Router();
-
-/**
- * Get a specific login record by ID.
- * @route GET /login/:id_login
- * @param {string} id_login - Unique ID of the login.
- */
-LoginRoute.get('/:id_login', getLoginById);
-
-/**
- * Get a specific login record by user name.
- * @route GET /login/user/:user_login
- * @param {string} user_login - User name of the login.
- */
-LoginRoute.get('/user/:user_login', getLoginByUser);
 
 /**
  * Create a new login record.
  * @route POST /login
  */
-LoginRoute.post('/', createLogin);
-
+LoginRoute.post("/", createLogin);
 
 /**
  * Create a new token
  * @route POST /login/authenticate
  */
-LoginRoute.post('/authenticate', authenticateUser);
+LoginRoute.post("/authenticate", authenticateUser);
 
 /**
- * Update a login record by ID.
- * @route PUT /login/:id_login
- * @param {string} id_login - Unique ID of the login to update.
+ * Verifies a JWT token and returns the user's data if the token is valid..
+ * @route GET /login/verify-token
  */
-LoginRoute.put('/:id_login', updateLogin);
+LoginRoute.get("/verify-token", verifyUserToken);
 
 export default LoginRoute;
