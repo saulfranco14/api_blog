@@ -8,6 +8,7 @@
     "build": "echo 'Building is not required for this project.'"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express-rate-limit": "^7.1.5",

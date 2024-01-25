@@ -51,9 +51,9 @@ export const getLoginByUserQuery = `
  */
 export const insertLoginQuery = `
     INSERT INTO Login 
-        (user_login, password_login, token_login, active_login, id_role) 
+        (user_login, password_login, token_login, active_login, id_role, last_login) 
     VALUES 
-        (?, ?, ?, ?, ?);
+        (?, ?, ?, ?, ?, ?);
 `;
 
 /**

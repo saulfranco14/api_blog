@@ -1,4 +1,5 @@
 import Login from "../models/Login.js";
+import SqlErrorCodes from '../utils/sqlErrorCodes.js'; 
 
 /**
  * Retrieves a login record by its ID.
@@ -47,13 +48,28 @@ export const getLoginByUser = async (req, res) => {
  * @param {object} res - Express response object.
  */
 export const createLogin = async (req, res) => {
-  const { user_login, password_login, token_login, active_login, id_role } =
-    req.body;
+  const { user_login, password_login, id_role } = req.body;
   try {
-    const newLogin = new Login(user_login, password_login, null, 1, id_role);
+    const newLogin = new Login(
+      user_login,
+      password_login,
+      null,
+      1,
+      id_role,
+      null
+    );
+
     await newLogin.save();
+
     res.status(201).json({ message: "Login successfully created", newLogin });
   } catch (error) {
+    console.log("error", error)
+    if (error.code === "ER_DUP_ENTRY") {
+      res.status(409).json({ error: "User not create" });
+    } else {
+      console.error("Error while creating login:", error);
+      res.status(500).json({ error: "Error while creating login" });
+    }
     console.error("Error while creating login:", error);
     res.status(500).json({ error: "Error while creating login" });
   }
