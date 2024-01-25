@@ -70,8 +70,6 @@ export const createLogin = async (req, res) => {
       console.error("Error while creating login:", error);
       res.status(500).json({ error: "Error while creating login" });
     }
-    console.error("Error while creating login:", error);
-    res.status(500).json({ error: "Error while creating login" });
   }
 };
 
