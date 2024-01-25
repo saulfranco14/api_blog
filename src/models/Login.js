@@ -1,9 +1,7 @@
 import db from "../config/db.js";
 import {
-  getLoginByIdQuery,
   getLoginByUserQuery,
   insertLoginQuery,
-  updateLoginQuery,
   updateUserTokenQuery,
 } from "../sql/LoginQueries.js";
 import { hashPassword } from "../utils/bcrypt.js";
