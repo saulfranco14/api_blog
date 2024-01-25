@@ -4,6 +4,7 @@ import {
   getLoginByUser,
   createLogin,
   updateLogin,
+  authenticateUser
 } from '../../controllers/Login.js';
 
 const LoginRoute = express.Router();
@@ -27,6 +28,13 @@ LoginRoute.get('/user/:user_login', getLoginByUser);
  * @route POST /login
  */
 LoginRoute.post('/', createLogin);
+
+
+/**
+ * Create a new token
+ * @route POST /login/authenticate
+ */
+LoginRoute.post('/authenticate', authenticateUser);
 
 /**
  * Update a login record by ID.
