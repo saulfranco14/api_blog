@@ -1,5 +1,6 @@
 import Login from "../models/Login.js";
-import SqlErrorCodes from '../utils/sqlErrorCodes.js'; 
+import { handleSqlError } from "../utils/handleError.js";
+import SqlErrorCodes from "../utils/sqlErrorCodes.js";
 
 /**
  * Retrieves a login record by its ID.
@@ -42,6 +43,52 @@ export const getLoginByUser = async (req, res) => {
 };
 
 /**
+ * Creates a verification token with an expiration time.
+ *
+ * @param {object} req - Express request object containing user_login and password_login in the body.
+ * @param {object} res - Express response object.
+ */
+export const authenticateUser = async (req, res) => {
+  const { user_login, password_login } = req.body;
+
+  try {
+    
+    const token = await Login.authenticate(user_login, password_login);
+    const user = await Login.getByUser(user_login);
+    await Login.updateUserToken(user[0].id_login, token);
+    res.json({ message: "Auth success", token });
+  } catch (error) {
+    console.log("error", error)
+    handleSqlError(error, res); 
+  }
+};
+
+
+/**
+ * Verifies a JWT token and returns user data.
+ *
+ * @param {object} req - Express request object with the JWT token.
+ * @param {object} res - Express response object.
+ */
+export const verifyUserToken = async (req, res) => {
+  //const token = req.headers.authorization?.split(' ')[1]; /"Bearer <token>"
+  const { token } = req.body;
+
+  if (!token) return res.status(401).json({ error: "Token no proporcionado" });
+  
+  try {
+    const userData = await Login.verifyToken(token);
+    res.json({ message: "Token success", data: userData });
+  } catch (error) {
+    console.error("Error while verifying token:", error);
+    if (error.name === "JsonWebTokenError") {
+      error.code = SqlErrorCodes.INVALID_TOKEN;
+    }
+    handleSqlError(error, res); 
+  }
+};
+
+/**
  * Creates a new login record.
  *
  * @param {object} req - Express request object containing login data in the body.
@@ -63,13 +110,8 @@ export const createLogin = async (req, res) => {
 
     res.status(201).json({ message: "Login successfully created", newLogin });
   } catch (error) {
-    console.log("error", error)
-    if (error.code === "ER_DUP_ENTRY") {
-      res.status(409).json({ error: "User not create" });
-    } else {
-      console.error("Error while creating login:", error);
-      res.status(500).json({ error: "Error while creating login" });
-    }
+    console.log("error", error);
+    handleSqlError(error, res);
   }
 };
 

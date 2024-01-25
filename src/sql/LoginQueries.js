@@ -67,7 +67,8 @@ export const insertLoginQuery = `
  * @returns {object} The result of the update operation.
  */
 export const updateLoginQuery = `
-    UPDATE Login 
+    UPDATE 
+        Login 
     SET 
         user_login = ?, 
         password_login = ?, 
@@ -76,4 +77,20 @@ export const updateLoginQuery = `
         id_role = ? 
     WHERE 
         id_login = ?;
+`;
+
+/**
+ * SQL query for updating a user's token in the 'Login' table.
+ *
+ * @type {string}
+ * @param {string} newToken - The new token value to set.
+ * @param {number} userId - The ID of the user to update.
+ * @returns {string} The SQL query to update the user's token.
+ */
+export const updateUserTokenQuery = `
+  UPDATE Login 
+  SET 
+    token_login = ?
+  WHERE 
+    id_login = ?;
 `;
