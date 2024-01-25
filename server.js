@@ -1,9 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { config as dotenvConfig } from "dotenv";
+import routes from "./src/routes/index.js";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import { config as dotenvConfig } from "dotenv";
+
 
 dotenvConfig();
 
@@ -20,10 +22,19 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+const verifyApiKey = (req, res, next) => {
+  const apiKey = req.headers["x-api-key"];
+  if (apiKey && apiKey === process.env.API_KEY) {
+    next();
+  } else {
+    res.status(401).send("Acceso no autorizado: API key inválida");
+  }
+};
 
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use("/", verifyApiKey, routes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
