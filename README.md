@@ -1,4 +1,4 @@
-# Nombre de tu API
+# API Blog
 
 [![Estado de la Construcción](https://img.shields.io/badge/estado-construcción-green.svg)](https://tu-enlace-de-construcción.com)
 [![Versión](https://img.shields.io/badge/versión-1.0.0-blue.svg)](https://github.com/tu-usuario/tu-repo)
