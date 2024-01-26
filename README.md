@@ -8,11 +8,11 @@ Este repositorio alberga una API REST diseñada para facilitar la gestión de us
 
 ## Funcionalidad
 
-1. **Registro de Usuarios:** Proporciona endpoints para crear nuevas cuentas de usuario con información básica como nombre, dirección de correo electrónico y contraseña.
+1. **Registro de Usuarios:** Proporciona endpoints para crear nuevas cuentas de usuario con información básica como nombre, dirección de correo electrónico y télefono celular.
 
 2. **Inicio de Sesión (Login):** Permite a los usuarios autenticarse en la plataforma mediante el uso de sus credenciales. Una vez autenticados, se generará un token de acceso que se utilizará en las solicitudes posteriores para garantizar la seguridad y la autorización.
 
-3. **Gestión de Entradas de Blog:** Facilita la creación, lectura, actualización y eliminación de entradas de blog. Los usuarios autenticados pueden crear y administrar su contenido de blog de manera eficiente.
+3. **Gestión de Entradas de Blog:** Facilita la creación y actualización de entradas de blog. Los usuarios autenticados pueden crear y administrar su contenido de blog de manera eficiente.
 
 ## Requisitos
 

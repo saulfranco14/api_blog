@@ -34,7 +34,7 @@ const verifyApiKey = (req, res, next) => {
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use("/", verifyApiKey, routes);
+app.use("/v1/", verifyApiKey, routes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
