@@ -37,16 +37,19 @@ export const updateBlogEntryActiveStatusQuery = `
 // Añadir estas consultas SQL
 export const getAllBlogEntriesQuery = `
     SELECT  
-        title_blog_entries, 
-        content_blog_entries, 
-        publication_blog_entries, 
-        active_blog_entries, 
-        id_user 
+        BlogEntries.title_blog_entries, 
+        BlogEntries.content_blog_entries, 
+        BlogEntries.publication_blog_entries, 
+        BlogEntries.active_blog_entries, 
+        BlogEntries.id_user,
+        User.name_user
     FROM 
         BlogEntries 
+    LEFT JOIN User ON BlogEntries.id_user = User.id_user
     WHERE 
-        active_blog_entries = 1;
+        BlogEntries.active_blog_entries = 1;
     `;
+
 export const getBlogEntryByLoginQuery = `
     SELECT  
         title_blog_entries, 
