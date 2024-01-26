@@ -1,10 +1,25 @@
 import express from "express";
 import {
   createBlogEntry,
-  enableDisableBlogEntry
+  enableDisableBlogEntry,
+  getAllBlogEntries,
+  getBlogEntriesByLogin,
 } from "../../controllers/BlogEntries.js";
 
 const BlogEntriesRoute = express.Router();
+
+/**
+ * Get all blog entries.
+ * @route GET /blog-entries
+ */
+BlogEntriesRoute.get("/", getAllBlogEntries);
+
+/**
+ * Get blog entries by user login.
+ * @route GET /blog-entries/user/:id_login
+ * @param {string} id_login - Identifier of the user to retrieve blog entries for.
+ */
+BlogEntriesRoute.get("/user/:id_login", getBlogEntriesByLogin);
 
 /**
  * Create a new blog entry.

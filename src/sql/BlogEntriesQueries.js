@@ -34,3 +34,27 @@ export const updateBlogEntryActiveStatusQuery = `
         id_blog_entries = ?;
 `;
 
+// Añadir estas consultas SQL
+export const getAllBlogEntriesQuery = `
+    SELECT  
+        title_blog_entries, 
+        content_blog_entries, 
+        publication_blog_entries, 
+        active_blog_entries, 
+        id_user 
+    FROM 
+        BlogEntries 
+    WHERE 
+        active_blog_entries = 1;
+    `;
+export const getBlogEntryByLoginQuery = `
+    SELECT  
+        title_blog_entries, 
+        content_blog_entries, 
+        publication_blog_entries, 
+        active_blog_entries, 
+        id_user 
+    FROM 
+        BlogEntries 
+    WHERE 
+        id_user = ?;`;

@@ -1,7 +1,9 @@
 import db from "../config/db.js";
 import {
    insertBlogEntryQuery,
-   updateBlogEntryActiveStatusQuery
+   updateBlogEntryActiveStatusQuery,
+   getAllBlogEntriesQuery,
+   getBlogEntryByLoginQuery
   } from "../sql/BlogEntriesQueries.js";
 
 class BlogEntries {
@@ -17,6 +19,26 @@ class BlogEntries {
     this.publication_blog_entries = publication_blog_entries;
     this.active_blog_entries = active_blog_entries;
     this.id_user = id_user;
+  }
+
+  static async all() {
+    try {
+      const result = await db.query(getAllBlogEntriesQuery);
+      return result[0];
+    } catch (error) {
+      console.error("Error al obtener todas las entradas del blog:", error);
+      throw error;
+    }
+  }
+
+  static async getByLogin(id_login) {
+    try {
+      const result = await db.query(getBlogEntryByLoginQuery, [id_login]);
+      return result[0]; 
+    } catch (error) {
+      console.error("Error al obtener la entrada del blog por login:", error);
+      throw error;
+    }
   }
 
   async save() {
