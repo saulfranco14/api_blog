@@ -59,7 +59,7 @@ export const createBlogEntry = async (req, res) => {
       content_blog_entries,
       publication_blog_entries,
       1,
-      user.id_user
+      user[0].id_user
     );
 
     await newBlogEntry.save();
