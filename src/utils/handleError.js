@@ -14,6 +14,8 @@ export const handleSqlError = (error, res) => {
     case "INCORRECT_PASSWORD":
     case SqlErrorCodes.INVALID_TOKEN:
       return res.status(401).json({ message: "Not authentication" });
+    case "TokenExpiredError":
+      return res.status(401).json({ message: "Token expired" });
     default:
       return res.status(500).json({ message: "Internal Server Error" });
   }

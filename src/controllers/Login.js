@@ -52,17 +52,15 @@ export const authenticateUser = async (req, res) => {
   const { user_login, password_login } = req.body;
 
   try {
-    
     const token = await Login.authenticate(user_login, password_login);
     const user = await Login.getByUser(user_login);
     await Login.updateUserToken(user[0].id_login, token);
     res.json({ message: "Auth success", token });
   } catch (error) {
-    console.log("error", error)
-    handleSqlError(error, res); 
+    console.log("error", error);
+    handleSqlError(error, res);
   }
 };
-
 
 /**
  * Verifies a JWT token and returns user data.
@@ -72,10 +70,10 @@ export const authenticateUser = async (req, res) => {
  */
 export const verifyUserToken = async (req, res) => {
   //const token = req.headers.authorization?.split(' ')[1]; /"Bearer <token>"
-  const { token } = req.body;
+  const token = req.query.token;
 
   if (!token) return res.status(401).json({ error: "Token no proporcionado" });
-  
+
   try {
     const userData = await Login.verifyToken(token);
     res.json({ message: "Token success", data: userData });
@@ -83,8 +81,10 @@ export const verifyUserToken = async (req, res) => {
     console.error("Error while verifying token:", error);
     if (error.name === "JsonWebTokenError") {
       error.code = SqlErrorCodes.INVALID_TOKEN;
+    } else if (error.name === "TokenExpiredError") {
+      error.code = "TokenExpiredError";
     }
-    handleSqlError(error, res); 
+    handleSqlError(error, res);
   }
 };
 
